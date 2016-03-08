@@ -61,9 +61,9 @@ NEWSPIDER_MODULE = 'google_plus_scraper.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'google_plus_scraper.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'google_plus_scraper.pipelines.GooglePlusScraperPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
