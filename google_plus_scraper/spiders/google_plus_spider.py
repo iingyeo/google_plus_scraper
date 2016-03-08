@@ -1,4 +1,6 @@
 import scrapy
+from google_plus_scraper.items import GooglePlusScraperItem
+
 
 class GooglePlusSpider(scrapy.Spider):
     name = "google_plus"
@@ -8,9 +10,26 @@ class GooglePlusSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        for sel in response.xpath('//a[@rel="nofollow"]'):
-            title = str(sel.xpath('@title').extract())
-            link = sel.xpath('@href').extract()
-
-            if(not title.isspace() and title != None and title != '' and len(title) > 0):
-                print title, link
+        '''
+        filename = 'test.html'
+        with open(filename, 'wb') as f:
+            f.write(response.body)
+        '''
+        for article in response.xpath('//div[@role="article"]'):
+            found = False
+            item = None
+            for a in article.xpath('.//a[@rel="nofollow"]'):
+                title = a.xpath('@title').extract_first()
+                if title != None and len(title) > 0:
+                    found = True
+                    link = a.xpath('@href').extract_first()
+                    #print title, link
+                    item = GooglePlusScraperItem()
+                    item['title'] = title
+                    item['link'] = link
+            if found:
+                date = article.xpath('.//a[@rel="noreferrer"]/text()').extract_first()
+                #print date
+                item['date'] = date
+                print item
+                yield item
