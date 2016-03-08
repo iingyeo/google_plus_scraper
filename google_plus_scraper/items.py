@@ -13,3 +13,4 @@ class GooglePlusScraperItem(scrapy.Item):
     # name = scrapy.Field()
     title = scrapy.Field()
     link = scrapy.Field()
+    date = scrapy.Field()
